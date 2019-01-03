@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Articles</h1>
 
 <table>
@@ -7,7 +5,6 @@
     <tr>
       <th>Title</th>
       <th>Body</th>
-      <th>User</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -17,15 +14,15 @@
       <tr>
         <td><%= article.title %></td>
         <td><%= article.body %></td>
-        <td><%= article.user %></td>
-        <td><%= link_to 'Show', article %></td>
-        <td><%= link_to 'Edit', edit_article_path(article) %></td>
-        <td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', article if can? :show, article%></td>
+        <td><%= link_to 'Edit', edit_article_path(article) if can? :edit, article%></td>
+        <td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, article %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Article', new_article_path %>
+<% if can? :create, Article %>
+  <%= link_to 'New Article', new_article_path %>
+<% end %>
